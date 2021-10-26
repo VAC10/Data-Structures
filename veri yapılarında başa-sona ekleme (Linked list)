@@ -1,0 +1,84 @@
+package veri_yapilari_dersleri;
+class dügüm{
+int data;
+dügüm ileri;//bir sonraki elemana geçiş yapar (gösterici)
+
+
+}
+class tekYönlülisteYapisi{
+dügüm bas=null;// öncelikle listemizin içini boşalttık. eğerki bu listeye eleman atarsak eleman null değerine atanır.
+dügüm son=null;
+void basaEkle(int x){ //başa ekleme metodu..
+    dügüm eleman=new dügüm(); //oluşturduğum elemanı başa ekleyecem
+    eleman.data=x; //bu elemanın datası parametre olarak tanımladığım x 'tir.
+    if(bas==null){
+    eleman.ileri=null; //eğerki içi boş ise eklenen eleman hem baştır hemde sondur.
+    bas=eleman;
+    son=eleman;
+        System.out.println("list yapısı oluşturuldu ilk eleman yerleştirildi..");
+    }
+    else{
+    eleman.ileri=bas;
+    bas=eleman;// güncellemeyi mutlaka yap.
+        System.out.println("başa eleman eklendi...");
+    
+    
+    }
+}
+void sonaEkle(int x){ //sona ekleme metodu..
+    dügüm eleman=new dügüm(); //oluşturduğum elemanı başa ekleyecem
+    eleman.data=x; //bu elemanın datası, parametre olarak tanımladığım x 'tir.
+    if(bas==null){
+    eleman.ileri=null; //eğerki içi boş ise eklenen eleman hem baştır hemde sondur.
+    bas=eleman;
+    son=eleman;
+        System.out.println("list yapısı oluşturuldu ilk eleman yerleştirildi..");
+    }
+    else{
+        eleman.ileri=null;
+    son.ileri=eleman; //ekleme yaptık
+    son=eleman;//isim güncellemesi yaptık.
+        System.out.println("sona eleman eklendi..");
+    
+    
+    }
+}
+void yazdir(){ //sona ekleme metodu..
+   
+    if(bas==null){
+    
+        System.out.println("liste yapısı boş!!!");
+    }
+    else{
+        dügüm temp=bas;
+        System.out.print("bas->");
+        while(temp!=null){
+            System.out.print(temp.data+"->");    
+            temp=temp.ileri;//bu kodla temp bir sonraki düğüme geçer ta ki null değeri gelene kadar.
+        }
+        System.out.print("son->");
+    }
+    
+    
+    }
+
+}
+public class tekyönlu_doğrusal_liste_yapısında_başa_ve_sona_veri_ekleme {
+
+  
+    public static void main(String[] args) {
+        
+        tekYönlülisteYapisi tekyonlist=new tekYönlülisteYapisi();//tek yonlu liste yapısı sınıfından "tekyonlist" adında liste yapısı oluşturduk.
+        tekyonlist.basaEkle(10);//basaekle fonksiyonunun parametresine 10 değerini gönderdik.
+        tekyonlist.sonaEkle(20);
+        tekyonlist.basaEkle(5);
+        tekyonlist.sonaEkle(30);
+        
+        tekyonlist.basaEkle(3);
+       tekyonlist.sonaEkle(6);
+        tekyonlist.yazdir();
+       // System.out.println("baştaki düğümün elemanı :"+tekyonlist.bas.data);
+        //System.out.println("sondaki düğümün elemanı :"+tekyonlist.son.data);
+    }
+    
+}
