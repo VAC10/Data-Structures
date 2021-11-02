@@ -1,0 +1,12 @@
+public class dügüm {
+    int data;
+    dügüm ileri;
+    dügüm geri;
+
+    public dügüm(int data) { //dügüm sınıfından nesne oluşturacaksak ileri ve geri değerlerine null ataadık
+        this.data=data;
+        ileri=null;
+        geri=null;
+    }
+    
+}
