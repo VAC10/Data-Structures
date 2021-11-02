@@ -1,0 +1,209 @@
+class dügüm{
+int data;
+dügüm ileri;
+
+
+}
+class daireselListeYapısı{
+dügüm bas=null;
+dügüm son=null;
+
+void basaEkle(int x){
+dügüm eleman= new dügüm();
+eleman.data=x;
+if(bas==null){ //eğerki baştaki eleman boşsa...
+    bas=eleman;
+    son=eleman;
+    son.ileri=bas; // dairesel bağlı listede sondaki eleman başı göstermek zorunda.
+}
+else{
+eleman.ileri=bas;
+bas=eleman;
+son.ileri=bas;
+}
+}
+void sonaEkle(int x){
+dügüm eleman= new dügüm();
+eleman.data=x;
+if(bas==null){ //eğerki baştaki eleman boşsa...
+    bas=eleman;
+    son=eleman;
+    son.ileri=bas; // dairesel bağlı listede sondaki eleman başı göstermek zorunda. 
+}
+else{
+  son.ileri=eleman;
+  son=eleman; 
+  eleman.ileri=bas;// ÖNEMLİ ! ! !
+  
+    
+}
+}
+
+void arayaEkle(int indis,int x){
+dügüm eleman= new dügüm();
+eleman.data=x;
+if(bas==null){ //eğerki baştaki eleman boşsa...
+    bas=eleman;
+    son=eleman;
+    son.ileri=bas; // dairesel bağlı listede sondaki eleman başı göstermek zorunda. 
+}
+else if (indis==0){ //indis değeri 0 verilrise başa ekleyecek.
+ eleman.ileri=bas;
+bas=eleman;
+son.ileri=bas; 
+}
+else{
+int n=0;
+dügüm temp=bas;
+dügüm once=bas;
+while(temp!=son ) {
+temp=temp.ileri;
+n++;
+}
+n++;//listede kaç eleman olduğuna eriştik
+if(indis>=n){ //sona ekleyeceğiz    
+    son.ileri=eleman;
+  son=eleman; 
+  eleman.ileri=bas;
+    
+   
+}
+else{ //eğerki direkt araya eklmek istiyorsam 
+    temp=bas;//tempi tekrar güncelledik yani başa aldık
+    once=temp;
+    int i=0;
+    while(i<indis){ //mesela 3.indisi girdik whileda 3.indise kadar gidecek
+    i++;
+    once=temp;
+    temp=temp.ileri;
+    
+    }
+      once.ileri=eleman;// araya eklemede mühim olan kısım bu iki satır
+      eleman.ileri=temp;
+      
+        }
+}
+
+
+}
+
+void bastanSil(){
+if(bas==null){
+    System.out.println("liste Boş ! ! !");
+}
+else if(bas==son){ //listede tek eleman vardır
+ bas=null;
+ son=null;
+
+}
+else{
+bas=bas.ileri;//başı bir ileri aldık
+son.ileri=bas;
+}
+
+
+}
+void sondanSil(){
+if(bas==null){
+    System.out.println("liste Boş ! ! !");
+}
+else if(bas==son){ //listede tek eleman var ise
+ bas=null;
+ son=null;
+
+}
+else{
+dügüm temp=bas;
+
+while(temp.ileri!=son){//  temp sondan bir önceki elemanı tutacak.
+    temp=temp.ileri;
+}
+son=temp;// temp sondan bir öncekini tutuyordu. burada sondan bir önceki elemanı sona atadık ve son boşa düştü
+son.ileri=bas; // dairesel bağlı listelerde olması gereken gibi sonu başa bağladık.
+
+}
+
+
+
+}
+
+
+void aradanSil(int indis){
+if(bas==null){
+    System.out.println("liste Boş ! ! !");
+}
+else if(bas==son){ //listede tek eleman var ise
+ bas=null;
+ son=null;
+
+}
+else{
+    int n=0;
+dügüm temp=bas;
+dügüm once=temp;
+
+while(temp!=son){//  temp sondan bir önceki elemanı tutacak.
+   temp=temp.ileri;
+   n++; //burada eleman sayısını bulduk
+}
+n++; 
+temp=bas; // tempi tekrardan baştan başlattık yani güncelledik
+int i=0;
+while(i<indis){ //burada sileceğimiz indise i ile ulaşıyoruz.
+    once=temp;
+    temp=temp.ileri;
+    i++;
+}
+once.ileri=temp.ileri;//onceyi tempten sonraki düğüme bağladık tempi aradan çıkardık
+
+
+
+
+
+}
+
+
+
+}
+
+void yazdir(){
+if(bas==null){
+    System.out.println("liste boş! ! !");
+}
+else{
+dügüm temp=bas;
+    System.out.print("baş->");
+while(temp!=son){ //dairesel yapıda sona kadar gideceğiz. dairesel yapıda null yoktur çünkü sondali eleman baştakini tutar.
+System.out.print(temp.data+"->");    
+temp=temp.ileri;
+}
+    System.out.print(temp.data+"->son");
+}
+   
+}
+}
+
+
+ class başa_ve_sona_eleman_ekleme {
+
+  
+    public static void main(String[] args) {
+         daireselListeYapısı daireselYapi=new daireselListeYapısı();
+         daireselYapi.basaEkle(5);
+         daireselYapi.sonaEkle(10);
+         daireselYapi.sonaEkle(15);
+         daireselYapi.sonaEkle(25); 
+         daireselYapi.sonaEkle(30);
+         daireselYapi.arayaEkle(2, 13);
+         daireselYapi.arayaEkle(0, 2);
+         daireselYapi.arayaEkle(8, 55);
+         daireselYapi.aradanSil(2);
+         daireselYapi.bastanSil();
+         daireselYapi.sondanSil();
+        
+
+         daireselYapi.yazdir();
+         
+    }
+    
+}
