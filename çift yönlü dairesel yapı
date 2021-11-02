@@ -1,0 +1,175 @@
+public class BagliListe {
+    dügüm bas=null;
+    dügüm son=null;
+    
+    
+    void basaEkle(int data){ //bu fonksiyonu çağıran kisi içerisine datasını koyacak ve bu data da oluşturulan nesnenin elemanı oalcak
+    dügüm eleman=new dügüm(data); //dügüm sınıfındannesne oluşturdum
+    if(bas==null){//eleman yoksa
+    bas=eleman;
+    son=eleman;
+    }
+    else{
+    eleman.ileri=bas;
+    bas.geri=eleman;
+    bas=eleman;
+    
+    }
+}
+void sonaEkle(int data){ //bu fonksiyonu çağıran kisi içerisine datasını koyacak ve bu data da oluşturulan nesnenin elemanı oalcak
+    dügüm eleman=new dügüm(data); //dügüm sınıfındannesne oluşturdum
+    if(bas==null){//eleman yoksa
+    bas=eleman;
+    son=eleman;
+    }
+    else{
+        
+    son.ileri=eleman;
+    eleman.geri=son;
+    son=eleman;
+    
+    }
+}
+void arayaEkle(int indis,int data){ //bu fonksiyonu çağıran kisi içerisine datasını koyacak ve bu data da oluşturulan nesnenin elemanı oalcak
+    dügüm eleman=new dügüm(data); //dügüm sınıfından nesne oluşturdum
+    if(bas==null){//eleman yoksa
+    bas=eleman;
+    son=eleman;
+    }
+    else if(bas!=null&&indis==0){ //listede eleman var ise ve sıfırıncı indise ekleme yapmak istiyorsak yani başa eklemek istiyorsak
+     eleman.ileri=bas;
+     bas.geri=eleman;
+     bas=eleman; 
+    
+    
+    }
+    else{
+        int n=0;
+        dügüm temp=bas;
+        
+        while(temp!=null){ //listede kaç düğüm olduğunu hesapladık
+        temp=temp.ileri;
+        n++;
+        }
+        temp=bas;
+        if(indis>n){ //n le son dugume geldik
+        son.ileri=eleman;
+        eleman.geri=son;
+        son=eleman;
+        
+        }
+        else{
+        int i=0;
+        while(i!=indis){
+        temp=temp.ileri;
+        i++;
+        }
+        eleman.geri=temp.geri; // EN ÖNEMLİ KISIM
+        temp.geri.ileri=eleman; 
+        eleman.ileri=temp;
+        temp.geri=eleman;
+        
+        
+        }
+    
+    }
+}
+void bastanSil(){
+if(bas!=null){
+   if(bas.ileri==null){ //listede bir eleman varsa
+        bas=null;
+        son=null;
+
+      }
+   else{//listede birden fazla eleman varsa
+   bas=bas.ileri; //başı bir ileri aldık
+   bas.geri=null;//başın gerisini null yaptık
+   
+   }
+
+}
+
+}
+void sondanSil(){
+if(bas!=null){ // baş nulla eşi olmadığı muddetce zaten durum buysa liste boştur.
+   if(bas.ileri==null){ //listede bir eleman varsa
+        bas=null;
+        son=null;
+
+      }
+   else{//listede eleman varsa
+       son=son.geri;//sonu bir geri aldık.
+       son.ileri=null;//ardından sonun ilerisini boşa çıkardık ve garbage kollektör halletti
+       
+   }
+
+}
+
+}
+void aradanSil(int indis){
+if(bas!=null){ // baş nulla eşi olmadığı muddetce zaten durum buysa liste boştur.
+   if(bas.ileri==null&&indis<=0){ //listede bir eleman varsa ve indis 0 a eşitse
+        bas=null;
+        son=null;
+
+      }
+   else if(bas.ileri!=null&&indis<=0){
+   bas=bas.ileri; //başı bir ileri aldık
+   bas.geri=null;//başın gerisini null yaptık
+   
+   }
+   else{//listede eleman varsa
+      int n=0;
+      dügüm temp=bas;
+      while(temp!=null){
+      n++;
+      temp=temp.ileri;
+      }
+      
+      if(indis>=n-1){//indis 0 dan başladığı için n-1 yaptık
+      son=son.geri;
+      son.ileri=null;
+      }
+      else{
+      temp=bas;
+      int i=0;
+      while(i<indis){
+      i++;
+      temp=temp.ileri; //temp son dugume geldi
+      }
+      temp.ileri.geri=temp.geri;
+      temp.geri.ileri=temp.ileri;
+      
+      }
+       
+   }
+
+}
+
+}
+
+void yazdir(){
+    dügüm temp=bas;
+    System.out.print("baş->");
+while(temp!=null){
+
+    System.out.print(temp.data+" -> ");
+    temp=temp.ileri; 
+}
+System.out.println(" son");
+
+}
+void sondanYazdir(){ //çift bağlı listeden geriden de gelebiliyorduk
+    dügüm temp=son;
+    System.out.print("son->");
+while(temp!=null){
+
+    System.out.print(temp.data+" -> ");
+    temp=temp.geri; 
+}
+System.out.println(" baş");
+
+}
+
+}
+ 
