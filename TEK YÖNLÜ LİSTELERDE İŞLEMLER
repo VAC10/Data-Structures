@@ -1,0 +1,247 @@
+class dügüm{
+int veri;
+dügüm ileri;
+public dügüm(int veri){
+this.veri=veri;
+ileri=null;
+}
+
+}
+
+class liste{
+dügüm bas;
+dügüm son;
+public liste(){
+bas=null;
+son=null;
+}
+void basaEkle(int veri){
+dügüm eleman =new dügüm(veri);
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{
+    eleman.ileri=bas;
+    bas=eleman;
+                   
+}
+
+}
+void sonaEkle(int veri){
+dügüm eleman=new dügüm(veri);
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{
+son.ileri=eleman;
+son=eleman;
+
+}
+
+}
+void arayaEkle(int index,int veri){
+dügüm eleman=new dügüm(veri);
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{//liste boş değilse 
+if(index==0){// index 0 sa basa ekleyeceğiz
+eleman.ileri=bas;
+bas=eleman;
+}
+else{//index 0 değilse ya sona ya da ortaya bir yere ekleyeceğiz
+dügüm temp=bas;
+dügüm once=bas;
+int mevcutİndex=0;
+while(temp!=null&&mevcutİndex<index){
+once=temp;
+temp=temp.ileri;
+mevcutİndex++;
+}
+if(temp==null){
+son.ileri=eleman;
+son=eleman;
+}
+else{//araya ekleyecen
+    eleman.ileri=temp;
+    once.ileri=eleman;
+}
+
+
+
+}
+
+}
+}    
+void bastanSil(){
+if(bosMu()==false){//liste boşsa
+    if(bas.ileri==null&&bas==son){ //tek bir eleman varsa veya bas==sonsa yani liste boşsa
+    bas=null;
+    son=null;
+    }
+    else{//listede birden fazla eleman varsa
+    bas=bas.ileri;    
+    }
+}
+}
+void sondanSil(){
+if(bosMu()==false){
+if(bas.ileri==null&&bas==son){
+bas=null;
+son=null;
+}
+else{
+    dügüm temp=bas;
+    while(temp.ileri!=son){//tempi sona eşit olmayana kadar ilerlet yani son elemana kadar
+    temp=temp.ileri;
+    }
+temp.ileri=null;
+son=temp; //son olarak tempi güncelledik
+}
+
+}
+}
+void aradanSil(int index){
+if(bosMu()==false){
+if(bas.ileri==null&&bas==son){
+    bas=null;
+    son=null;
+}
+else{
+if(index==0){
+bas=bas.ileri;
+}
+else{
+dügüm temp=bas;
+dügüm once=bas;
+int mevcutİndex=0;
+while(temp!=null&&mevcutİndex<index){
+once=temp;
+temp=temp.ileri;
+mevcutİndex++;
+}
+
+if(temp==son){ //sona silme yaptık
+    son=once;
+    once.ileri=null;
+    
+}
+else{//ortadan silme
+dügüm sonra=temp.ileri;
+temp.ileri=null;
+once.ileri=sonra;
+}
+
+ 
+
+
+
+
+}
+
+
+}
+
+
+}
+
+
+}
+
+
+
+void yazdir(){
+dügüm temp=bas;
+    System.out.print("baş->");
+while(temp!=null){
+ System.out.print(temp.veri+"->");
+  temp=temp.ileri;
+
+}
+    System.out.print("son");
+
+
+}
+dügüm ara(int deger){
+    
+    dügüm temp=bas;
+    while(temp!=null){
+    if(temp.veri==deger)
+    return temp;
+    temp=temp.ileri;
+    
+   
+    }
+    
+      return null;
+    
+    
+    } 
+
+
+
+
+
+
+public boolean bosMu(){
+if(bas==null){
+return true;}
+return false;
+}
+
+
+
+
+
+
+
+    
+    
+    
+
+}
+
+
+
+
+
+
+
+public class TekyönlüListeBütün_uygulamalar {
+
+  
+    public static void main(String[] args) {
+        liste list=new liste();
+        list.basaEkle(10);
+        list.basaEkle(5);
+        list.sonaEkle(15);
+        list.sonaEkle(20);
+        list.sonaEkle(25);
+        list.sonaEkle(30);
+        list.arayaEkle(0, -1);
+        list.arayaEkle(7, 35);
+        list.arayaEkle(2, 7);
+        list.aradanSil(3);
+        list.arayaEkle(4, 19);
+        list.aradanSil(0);
+        list.aradanSil(7);
+        list.arayaEkle(7,40);
+        list.arayaEkle(2, 16);
+        dügüm aranan=list.ara(15);
+        if(aranan==null){
+            System.out.println("aranan eleman bulunamadı");
+        }
+        else{
+            System.out.println("aranan eleman bulundu:"+aranan.veri);
+        }
+        
+       
+       
+             
+        list.yazdir();
+    }
+    
+}
