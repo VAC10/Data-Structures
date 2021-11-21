@@ -1,0 +1,259 @@
+class dügüm{
+int veri;
+dügüm ileri;
+dügüm geri;
+public dügüm(int veri){
+this.veri=veri;
+ileri=null;
+geri=null;
+
+}
+
+}
+class cfliste{
+dügüm bas;
+dügüm son;
+public cfliste(){
+bas=null;
+son=null;
+}
+void basaEkle(int veri){
+dügüm eleman=new dügüm(veri);
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{
+eleman.ileri=bas;
+bas.geri=eleman;
+bas=eleman;
+}
+}
+void sonaEkle(dügüm eleman){
+
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{
+son.ileri=eleman;
+eleman.geri=son;
+son=eleman;
+}
+}
+void arayaEkle(int index,int veri){
+    
+dügüm eleman=new dügüm(veri);
+if(bosMu()){
+bas=eleman;
+son=eleman;
+}
+else{
+  if(index==0){//başa eleman eklemek istiyorsam
+  eleman.ileri=bas;
+  bas.geri=eleman;
+  bas=eleman;
+  }  
+  else{//liste boş değilse buradada iki durum var birincisi: sona ekleme ikincisi araya ekleme
+
+  
+  if(index==0&&bas.ileri==null){//listede birtane eleman vardır.
+  eleman.ileri=bas;
+  bas.geri=eleman;
+  bas=eleman; 
+  }
+  
+  else{//araya ekleme yapacağız 
+  dügüm temp=bas;
+int mevcutİndex=0;
+  while(temp!=null&&mevcutİndex<index){
+  temp=temp.ileri;     
+  mevcutİndex++;
+  }
+  if(temp==null){
+  son.ileri=eleman;
+  eleman.geri=son;
+  son=eleman;
+  
+
+  }
+  else{
+  eleman.geri=temp.geri; //onceyle alakamız yok! ! ! yani ismi atama yapılırken geçmiyor! ! !
+  temp.geri.ileri=eleman;
+  eleman.ileri=temp;
+  temp.geri=eleman;
+  }
+}
+
+
+
+}
+
+}
+}
+
+void bastanSil(){
+if(bosMu()==false){
+if(bas.ileri==null&&bas==son){//listede tek bir eleman varsa
+bas=null;
+son=null;
+
+}
+else{ //listede birden fazla eleman varsa
+bas=bas.ileri;
+bas.geri=null;// BUNU YAPMAYI UNUTMA ! ! ! ÇİFT YÖNLÜ LİSTE ÜZERİNDE ÇALIŞIYORSUN
+}
+}
+}
+void sondanSil(){
+if(bosMu()==false){
+if(bas.ileri==null){
+bas=null;
+son=null;
+}
+else{
+son.geri.ileri=null;//sonu bir geriye aldık 
+son=son.geri;//sonun ilerisine null atadık.
+
+}
+
+    
+    
+}
+}
+void aradanSil(int index){
+if(bosMu()==false){
+if(bas.ileri==null){//listede bir eleman varsa
+bas=null;
+son=null;
+}
+else{//birden fazla eleman varsa
+if(index==0){
+bas=bas.ileri;
+bas.geri=null;
+}
+else{
+dügüm temp=bas;
+dügüm once=bas;
+int mevcutİndex=0;
+while(temp!=null&&mevcutİndex<index){
+    once=temp;
+    temp=temp.ileri;
+  mevcutİndex++;
+}
+if(temp==son){
+son.geri.ileri=null;//sonu gersinin ilerisini sildik yani sonu sildik
+son=son.geri;//son elemanın gerisi artık son olacak yani güncellemeyi de yapmış olduk.
+}
+else{
+ temp.ileri.geri=temp.geri;//ortadan sildik
+      temp.geri.ileri=temp.ileri;
+      
+
+}
+
+
+
+}
+
+
+
+
+}
+
+
+}    
+
+
+
+
+}
+dügüm ara(int deger){
+    dügüm temp=bas;
+    while(temp!=null){
+    if(temp.veri==deger){
+     
+    return temp;}
+      temp=temp.ileri; 
+    
+   
+    }
+    
+      return null;
+    
+    
+    }
+
+
+
+
+void ekranaYazdir(){
+dügüm temp=bas;
+    System.out.print("bas->");
+while(temp!=null){
+    System.out.print(temp.veri+"->");
+    temp=temp.ileri;
+}
+    System.out.println("son");
+}
+
+
+
+
+
+
+public boolean bosMu(){
+if(bas==null){
+return true;
+
+}
+else{
+return false;}
+
+
+
+
+}
+
+
+}
+
+
+public class ciftYönlist_bütünUygulamalar {
+
+    public static void main(String[] args) {
+     cfliste ciftliste =new cfliste();
+     ciftliste.basaEkle(4);
+     ciftliste.sonaEkle(new dügüm(8));
+     ciftliste.sonaEkle(new dügüm(12));
+     ciftliste.sonaEkle(new dügüm(16));
+     ciftliste.sonaEkle(new dügüm(20));
+     ciftliste.sonaEkle(new dügüm(24));
+     ciftliste.arayaEkle(2, 11);
+      ciftliste.arayaEkle(5, 21);
+      ciftliste.aradanSil(2);
+      ciftliste.aradanSil(0);
+      ciftliste.aradanSil(5);
+      ciftliste.basaEkle(6);
+      ciftliste.sonaEkle(new dügüm(65));
+      ciftliste.arayaEkle(3, 15);
+      ciftliste.arayaEkle(8, 80);
+      ciftliste.aradanSil(2);
+      ciftliste.arayaEkle(5, 26);
+      ciftliste.sondanSil();
+      ciftliste.bastanSil();
+      ciftliste.arayaEkle(2, 17);
+      
+      
+
+  
+     /* dügüm aranan=ciftliste.ara(16);
+      if(aranan==null){
+          System.out.println("aranan bulunamadı");
+      }
+      else{
+          System.out.println("aranan eleman bulundu :"+aranan.veri);
+      }*/
+     ciftliste.ekranaYazdir();
+  }  
+}
